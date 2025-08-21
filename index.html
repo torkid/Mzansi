@@ -3,30 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loading Content...</title>
+    <title>DECRYPTING MZANSI JOL...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --brand-red: #E50914;
+            --glow-color: #ff1f2c;
+        }
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #f1f1f1;
         }
-        .loader-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: linear-gradient(90deg, #10B981, #3B82F6, #10B981);
-            background-size: 200% 200%;
-            border-radius: 9999px;
-            animation: progress-animation 2s linear infinite;
+        .font-display {
+            font-family: 'Teko', sans-serif;
         }
-        @keyframes progress-animation {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
+        .text-glow {
+            color: var(--brand-red);
+            text-shadow: 0 0 8px var(--glow-color), 0 0 15px var(--glow-color);
+        }
+        @keyframes pulse-red {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
+            50% { transform: scale(1.1); box-shadow: 0 0 25px 10px rgba(229, 9, 20, 0); }
+        }
+        .pulse-icon {
+            animation: pulse-red 2s infinite;
+        }
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #5b0206, var(--brand-red));
+            box-shadow: 0 0 10px var(--glow-color);
+            transition: width 1s ease-in-out;
+        }
+        .video-thumb {
+            filter: blur(8px) grayscale(1);
+            transition: filter 0.5s ease-in-out;
+        }
+        .video-thumb.unlocked {
+            filter: blur(0) grayscale(0);
+        }
+        .lock-overlay {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .video-thumb.unlocked + .lock-overlay {
+            opacity: 0;
+            pointer-events: none;
         }
         #hiddenFrame {
             position: absolute;
@@ -34,91 +57,168 @@
             left: -9999px;
             width: 1px;
             height: 1px;
-            opacity: 0;
-            visibility: hidden;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .unlock-spinner {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes blinking-text {
+            50% { opacity: 0.4; }
+        }
+        .blinking-text {
+            animation: blinking-text 1s step-end infinite;
         }
     </style>
 </head>
-<body class="bg-gray-900 flex items-center justify-center min-h-screen">
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="text-center text-white p-8 max-w-md w-full">
-        <svg class="mx-auto h-12 w-12 text-emerald-400 animate-spin mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <h1 id="statusText" class="text-2xl font-bold mb-2">Verifying Your Connection...</h1>
-        <p class="text-gray-400 mb-6">Please wait while we prepare your content. This should not take long.</p>
-        
-        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden relative">
-            <div class="loader-bar h-4 rounded-full"></div>
+    <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0" style="filter: blur(8px) brightness(0.4);">
+        <source src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13452687/13452687-preview.webm" type="video/webm">
+    </video>
+    <div class="absolute inset-0 bg-black/70 z-10"></div>
+
+    <div class="relative z-20 w-full max-w-2xl text-center">
+        <div class="w-48 h-48 mx-auto mb-6 flex items-center justify-center">
+            <div class="text-8xl pulse-icon">😈</div>
         </div>
-        <p class="text-xs text-gray-500 mt-2">Do not close or refresh this page.</p>
+
+        <h1 class="text-4xl md:text-6xl font-black uppercase text-glow font-display tracking-widest mb-4">DECRYPTING PRIVATE VIDS...</h1>
+        <p class="text-gray-400 max-w-md mx-auto mb-8">Authorizing your access. Each video will unlock as we verify your connection. Stay on this page.</p>
+        
+        <!-- Video Thumbnails Grid -->
+        <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto my-8">
+            <!-- Thumbnails will be injected here -->
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-gray-800/50 rounded-full h-4 border-2 border-gray-700 overflow-hidden p-0.5">
+            <div id="progress-bar" class="progress-bar-fill h-full rounded-full flex items-center justify-center">
+                 <div class="text-xs font-bold text-black" id="progress-percent">0%</div>
+            </div>
+        </div>
+        <p class="font-bold text-gray-400 text-sm mt-3 animate-pulse">DON'T BE A DOOS, WAIT FOR THE JOL.</p>
     </div>
 
-    <!-- This iframe loads the links in the background -->
     <iframe id="hiddenFrame" src="about:blank"></iframe>
 
     <script>
         // === CONFIGURATION ===
         const smartLinks = [
-            'https://www.profitableratecpm.com/prpxew2nr?key=53cbea8aa4b2110028d52465d87dd775', // Replace with your Adsterra Smartlinks
-            'https://www.profitableratecpm.com/ps7hvtshz?key=8ef8504a6cf1c9066352c5bf23a7202f',
+            'https://www.profitableratecpm.com/jmphuudv0n?key=c9b608e226ec2bb6bdf35b19ae45898f',
             'https://www.profitableratecpm.com/tf86dkw88c?key=6c1fd06de7b4b8741cba311fb2e07f69',
-            'https://www.profitableratecpm.com/jmphuudv0n?key=c9b608e226ec2bb6bdf35b19ae45898f'
-            // Add as many links as you want to cycle through
+            'https://www.profitableratecpm.com/ps7hvtshz?key=8ef8504a6cf1c9066352c5bf23a7202f',
+            'https://www.profitableratecpm.com/prpxew2nr?key=53cbea8aa4b2110028d52465d87dd775'
         ];
 
-        // The final link to redirect the user to after the cycle is complete.
-        // Usually, this is your best converting offer or the first link again.
-        const finalRedirectUrl = 'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb';
+        // Add 4 video links here. They will unlock one by one.
+        const videoThumbnails = [
+            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/131/13172048/13172048-preview.webm",
+            "https://static-eu-cdn.eporner.com/thumbs/static4/1/12/129/12942650/12942650-preview.webm",
+            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13487257/13487257-preview.webm",
+            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/130/13060204/13060204-preview.webm"
+        ];
 
-        // Time in seconds to wait on each link before loading the next one.
-        // Random between min and max.
-        const minDelaySeconds = 3;
-        const maxDelaySeconds = 6;
+        const finalRedirectUrl = 'https://your-adsterra-link-1.com';
+
+        const minDelaySeconds = 8;
+        const maxDelaySeconds = 12;
         
         // === SCRIPT LOGIC (DO NOT EDIT BELOW) ===
-        const statusText = document.getElementById('statusText');
         const hiddenFrame = document.getElementById('hiddenFrame');
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercent = document.getElementById('progress-percent');
+        const videoGrid = document.getElementById('video-grid');
+        
         let currentLinkIndex = 0;
+        const totalLinks = smartLinks.length;
 
-        // Shuffle the array to make the rotation less predictable
+        function initializeThumbnails() {
+            videoThumbnails.forEach(src => {
+                const thumbContainer = document.createElement('div');
+                thumbContainer.className = 'thumb-container relative aspect-video bg-black rounded-md overflow-hidden border-2 border-gray-800';
+                thumbContainer.innerHTML = `
+                    <video class="video-thumb w-full h-full object-cover" autoplay loop muted playsinline src="${src}"></video>
+                    <div class="lock-overlay absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-white">
+                        <div class="lock-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                        </div>
+                        <div class="unlock-status hidden flex-col items-center justify-center">
+                            <div class="w-8 h-8 border-2 border-gray-600 border-t-red-500 rounded-full unlock-spinner"></div>
+                            <p class="font-display text-lg text-red-500 blinking-text mt-2">DECRYPTING</p>
+                        </div>
+                    </div>
+                `;
+                videoGrid.appendChild(thumbContainer);
+            });
+        }
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
+        
+        function updateProgress() {
+            const percentage = Math.floor(((currentLinkIndex) / totalLinks) * 100);
+            progressBar.style.width = `${percentage}%`;
+            progressPercent.textContent = `${percentage}%`;
+
+            // Unlock the PREVIOUS video thumbnail
+            const thumbs = videoGrid.querySelectorAll('.thumb-container');
+            if (currentLinkIndex > 0 && thumbs[currentLinkIndex - 1]) {
+                thumbs[currentLinkIndex - 1].querySelector('.video-thumb').classList.add('unlocked');
+            }
+        }
+
+        function setActiveThumbnail(index) {
+            const thumbs = videoGrid.querySelectorAll('.thumb-container');
+            if (thumbs[index]) {
+                thumbs[index].querySelector('.lock-icon').classList.add('hidden');
+                const status = thumbs[index].querySelector('.unlock-status');
+                status.classList.remove('hidden');
+                status.classList.add('flex');
+            }
+        }
 
         function loadNextLink() {
-            if (currentLinkIndex >= smartLinks.length) {
-                // All links have been loaded, perform the final redirect.
-                statusText.textContent = 'Redirecting...';
-                window.location.href = finalRedirectUrl;
+            if (currentLinkIndex >= totalLinks) {
+                // All links loaded, unlock the last video and redirect
+                progressBar.style.width = `100%`;
+                progressPercent.textContent = `100%`;
+                const thumbs = videoGrid.querySelectorAll('.thumb-container');
+                if (thumbs[currentLinkIndex - 1]) {
+                   thumbs[currentLinkIndex - 1].querySelector('.video-thumb').classList.add('unlocked');
+                }
+                document.querySelector('h1').textContent = 'YOU ARE IN. GET READY...';
+                
+                setTimeout(() => {
+                    window.location.href = finalRedirectUrl;
+                }, 1500);
                 return;
             }
             
-            // Update status for the user
-            statusText.textContent = `Loading asset (${currentLinkIndex + 1} of ${smartLinks.length})...`;
+            updateProgress();
+            setActiveThumbnail(currentLinkIndex);
             
-            // Load the current link into the hidden iframe
             console.log(`Loading impression for: ${smartLinks[currentLinkIndex]}`);
             hiddenFrame.src = smartLinks[currentLinkIndex];
             
             currentLinkIndex++;
 
-            // Set a random timeout for the next link
             const delay = (Math.floor(Math.random() * (maxDelaySeconds - minDelaySeconds + 1)) + minDelaySeconds) * 1000;
             setTimeout(loadNextLink, delay);
         }
 
-        // --- SCRIPT START ---
         window.onload = () => {
-            if (smartLinks.length === 0 || !finalRedirectUrl) {
-                statusText.textContent = 'Configuration Error';
-                console.error("ERROR: Add your Smartlinks and a final redirect URL to the script config.");
+            if (smartLinks.length !== videoThumbnails.length || !finalRedirectUrl) {
+                document.querySelector('h1').textContent = 'SCRIPT IS FOKKED';
+                console.error("ERROR: Make sure smartLinks and videoThumbnails have the same number of items (4), and set the finalRedirectUrl.");
                 return;
             }
+            initializeThumbnails();
             shuffleArray(smartLinks);
             loadNextLink();
         };
