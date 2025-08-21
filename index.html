@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DECRYPTING MZANSI JOL...</title>
+    <title>Verify Your Age To Enter</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,205 +23,95 @@
         }
         .text-glow {
             color: var(--brand-red);
-            text-shadow: 0 0 8px var(--glow-color), 0 0 15px var(--glow-color);
+            text-shadow: 0 0 8px var(--glow-color), 0 0 25px var(--glow-color);
         }
-        @keyframes pulse-red {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
-            50% { transform: scale(1.1); box-shadow: 0 0 25px 10px rgba(229, 9, 20, 0); }
+        @keyframes pulse-insane {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 25px rgba(229, 9, 20, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
         }
-        .pulse-icon {
-            animation: pulse-red 2s infinite;
+        .final-cta {
+            animation: pulse-insane 1.5s infinite;
         }
-        .progress-bar-fill {
-            background: linear-gradient(90deg, #5b0206, var(--brand-red));
-            box-shadow: 0 0 10px var(--glow-color);
-            transition: width 1s ease-in-out;
+        .preview-vid-container {
+            border: 2px solid #333;
+            transition: border-color 0.3s ease;
         }
-        .video-thumb {
-            filter: blur(8px) grayscale(1);
-            transition: filter 0.5s ease-in-out;
-        }
-        .video-thumb.unlocked {
-            filter: blur(0) grayscale(0);
-        }
-        .lock-overlay {
-            transition: opacity 0.5s ease-in-out;
-        }
-        .video-thumb.unlocked + .lock-overlay {
-            opacity: 0;
-            pointer-events: none;
-        }
-        #hiddenFrame {
-            position: absolute;
-            top: -9999px;
-            left: -9999px;
-            width: 1px;
-            height: 1px;
-        }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .unlock-spinner {
-            animation: spin 1s linear infinite;
-        }
-        @keyframes blinking-text {
-            50% { opacity: 0.4; }
-        }
-        .blinking-text {
-            animation: blinking-text 1s step-end infinite;
+        .preview-vid-container:hover {
+            border-color: var(--brand-red);
         }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0" style="filter: blur(8px) brightness(0.4);">
+    <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0" style="filter: blur(8px) brightness(0.5);">
         <source src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13452687/13452687-preview.webm" type="video/webm">
     </video>
-    <div class="absolute inset-0 bg-black/70 z-10"></div>
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
 
-    <div class="relative z-20 w-full max-w-2xl text-center">
-        <div class="w-48 h-48 mx-auto mb-6 flex items-center justify-center">
-            <div class="text-8xl pulse-icon">😈</div>
+    <div class="relative z-20 w-full max-w-3xl text-center">
+        <div class="mb-4">
+            <span class="text-8xl">🔞</span>
         </div>
 
-        <h1 class="text-4xl md:text-6xl font-black uppercase text-glow font-display tracking-widest mb-4">DECRYPTING PRIVATE VIDS...</h1>
-        <p class="text-gray-400 max-w-md mx-auto mb-8">Authorizing your access. Each video will unlock as we verify your connection. Stay on this page.</p>
+        <h1 class="text-5xl md:text-7xl font-black uppercase text-glow font-display tracking-widest mb-4">WARNING: ADULT CONTENT</h1>
+        <p class="text-gray-300 max-w-lg mx-auto mb-8 text-lg">
+            This site contains explicit videos and links to private WhatsApp groups. You must be 18 or older to continue.
+        </p>
         
-        <!-- Video Thumbnails Grid -->
-        <div id="video-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto my-8">
-            <!-- Thumbnails will be injected here -->
+        <div class="flex flex-col items-center space-y-4">
+             <button id="enterButton" class="final-cta bg-red-600 text-white font-black text-3xl uppercase py-5 px-16 rounded-lg shadow-lg border-2 border-red-700 hover:bg-red-500 transition-all duration-200">
+                I Am Over 18 - Enter
+            </button>
+            <a href="https://www.google.com" class="text-gray-500 hover:text-white transition-colors">No Thanks, Exit</a>
         </div>
 
-        <!-- Progress Bar -->
-        <div class="w-full bg-gray-800/50 rounded-full h-4 border-2 border-gray-700 overflow-hidden p-0.5">
-            <div id="progress-bar" class="progress-bar-fill h-full rounded-full flex items-center justify-center">
-                 <div class="text-xs font-bold text-black" id="progress-percent">0%</div>
+        <!-- Live Previews Section -->
+        <div class="mt-12">
+            <h2 class="font-display text-2xl uppercase tracking-wider text-gray-400 mb-4">Live Previews Of What's Inside...</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
+                <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/131/13172048/13172048-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/12/129/12942650/12942650-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13487257/13487257-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/130/13060204/13060204-preview.webm"></video>
+                </div>
             </div>
         </div>
-        <p class="font-bold text-gray-400 text-sm mt-3 animate-pulse">DON'T BE A DOOS, WAIT FOR THE JOL.</p>
     </div>
-
-    <iframe id="hiddenFrame" src="about:blank"></iframe>
 
     <script>
         // === CONFIGURATION ===
-        const smartLinks = [
-            'https://www.profitableratecpm.com/jyhz7ft1x?key=6a75d10f53336a2fe8c2689516ac27b6',
-            'https://www.profitableratecpm.com/ru3zg8cb?key=8dc22e9b24b62e0db7a4ddf2469c23e1',
-            'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb',
-            'https://www.profitableratecpm.com/jyhz7ft1x?key=6a75d10f53336a2fe8c2689516ac27b6'
-        ];
+        // The main link the user sees and interacts with (Account #1)
+        const foregroundLink = 'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb';
 
-        // Add 4 video links here. They will unlock one by one.
-        const videoThumbnails = [
-            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/131/13172048/13172048-preview.webm",
-            "https://static-eu-cdn.eporner.com/thumbs/static4/1/12/129/12942650/12942650-preview.webm",
-            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13487257/13487257-preview.webm",
-            "https://static-eu-cdn.eporner.com/thumbs/static4/1/13/130/13060204/13060204-preview.webm"
-        ];
-
-        const finalRedirectUrl = 'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb';
-
-        const minDelaySeconds = 8;
-        const maxDelaySeconds = 12;
+        // The second link that opens in the background (Account #2)
+        const backgroundLink = 'https://www.profitableratecpm.com/jyhz7ft1x?key=6a75d10f53336a2fe8c2689516ac27b6';
         
-        // === SCRIPT LOGIC (DO NOT EDIT BELOW) ===
-        const hiddenFrame = document.getElementById('hiddenFrame');
-        const progressBar = document.getElementById('progress-bar');
-        const progressPercent = document.getElementById('progress-percent');
-        const videoGrid = document.getElementById('video-grid');
-        
-        let currentLinkIndex = 0;
-        const totalLinks = smartLinks.length;
+        // === SCRIPT LOGIC ===
+        const enterButton = document.getElementById('enterButton');
 
-        function initializeThumbnails() {
-            videoThumbnails.forEach(src => {
-                const thumbContainer = document.createElement('div');
-                thumbContainer.className = 'thumb-container relative aspect-video bg-black rounded-md overflow-hidden border-2 border-gray-800';
-                thumbContainer.innerHTML = `
-                    <video class="video-thumb w-full h-full object-cover" autoplay loop muted playsinline src="${src}"></video>
-                    <div class="lock-overlay absolute inset-0 bg-black/70 flex flex-col items-center justify-center text-white">
-                        <div class="lock-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-                        </div>
-                        <div class="unlock-status hidden flex-col items-center justify-center">
-                            <div class="w-8 h-8 border-2 border-gray-600 border-t-red-500 rounded-full unlock-spinner"></div>
-                            <p class="font-display text-lg text-red-500 blinking-text mt-2">DECRYPTING</p>
-                        </div>
-                    </div>
-                `;
-                videoGrid.appendChild(thumbContainer);
-            });
+        function openTheLinks() {
+            // --- The Magic Happens Here ---
+            // This function is the key. Because it's triggered by a direct user click, 
+            // browsers are much more likely to allow both actions.
+
+            // 1. Open the background link. This will usually open in a new tab but without focus.
+            // It's a "fire and forget" shot.
+            window.open(backgroundLink);
+
+            // 2. Redirect the CURRENT tab to the main offer. This is what the user follows.
+            // This is better than opening another new tab because it's a smoother experience.
+            window.location.href = foregroundLink;
         }
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-        }
-        
-        function updateProgress() {
-            const percentage = Math.floor(((currentLinkIndex) / totalLinks) * 100);
-            progressBar.style.width = `${percentage}%`;
-            progressPercent.textContent = `${percentage}%`;
-
-            // Unlock the PREVIOUS video thumbnail
-            const thumbs = videoGrid.querySelectorAll('.thumb-container');
-            if (currentLinkIndex > 0 && thumbs[currentLinkIndex - 1]) {
-                thumbs[currentLinkIndex - 1].querySelector('.video-thumb').classList.add('unlocked');
-            }
-        }
-
-        function setActiveThumbnail(index) {
-            const thumbs = videoGrid.querySelectorAll('.thumb-container');
-            if (thumbs[index]) {
-                thumbs[index].querySelector('.lock-icon').classList.add('hidden');
-                const status = thumbs[index].querySelector('.unlock-status');
-                status.classList.remove('hidden');
-                status.classList.add('flex');
-            }
-        }
-
-        function loadNextLink() {
-            if (currentLinkIndex >= totalLinks) {
-                // All links loaded, unlock the last video and redirect
-                progressBar.style.width = `100%`;
-                progressPercent.textContent = `100%`;
-                const thumbs = videoGrid.querySelectorAll('.thumb-container');
-                if (thumbs[currentLinkIndex - 1]) {
-                   thumbs[currentLinkIndex - 1].querySelector('.video-thumb').classList.add('unlocked');
-                }
-                document.querySelector('h1').textContent = 'YOU ARE IN. GET READY...';
-                
-                setTimeout(() => {
-                    window.location.href = finalRedirectUrl;
-                }, 1500);
-                return;
-            }
-            
-            updateProgress();
-            setActiveThumbnail(currentLinkIndex);
-            
-            console.log(`Loading impression for: ${smartLinks[currentLinkIndex]}`);
-            hiddenFrame.src = smartLinks[currentLinkIndex];
-            
-            currentLinkIndex++;
-
-            const delay = (Math.floor(Math.random() * (maxDelaySeconds - minDelaySeconds + 1)) + minDelaySeconds) * 1000;
-            setTimeout(loadNextLink, delay);
-        }
-
-        window.onload = () => {
-            if (smartLinks.length !== videoThumbnails.length || !finalRedirectUrl) {
-                document.querySelector('h1').textContent = 'SCRIPT IS FOKKED';
-                console.error("ERROR: Make sure smartLinks and videoThumbnails have the same number of items (4), and set the finalRedirectUrl.");
-                return;
-            }
-            initializeThumbnails();
-            shuffleArray(smartLinks);
-            loadNextLink();
-        };
+        enterButton.addEventListener('click', openTheLinks);
     </script>
 </body>
 </html>
