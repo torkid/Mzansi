@@ -2,13 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting...</title>
-    <!-- This meta tag immediately redirects the user to the specified URL. -->
-    <!-- The "0" means there is a zero-second delay. -->
+    <title>Verify Your Age To Enter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #E50914;
+            --glow-color: #ff1f2c;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #f1f1f1;
+        }
+        .font-display {
+            font-family: 'Teko', sans-serif;
+        }
+        .text-glow {
+            color: var(--brand-red);
+            text-shadow: 0 0 8px var(--glow-color), 0 0 25px var(--glow-color);
+        }
+        @keyframes pulse-insane {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 25px rgba(229, 9, 20, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
+        }
+        .final-cta {
+            animation: pulse-insane 1.5s infinite;
+        }
+        .preview-vid-container {
+            border: 2px solid #333;
+            transition: border-color 0.3s ease;
+        }
+        .preview-vid-container:hover {
+            border-color: var(--brand-red);
+        }
+    </style>
 </head>
-<body>
-    <!-- The body is intentionally left empty for a direct redirect without displaying any content. -->
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <video autoplay loop muted playsinline class="absolute top-0 left-0 w-full h-full object-cover z-0" style="filter: blur(8px) brightness(0.5);">
+        <source src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13452687/13452687-preview.webm" type="video/webm">
+    </video>
+    <div class="absolute inset-0 bg-black/80 z-10"></div>
+
+    <div class="relative z-20 w-full max-w-3xl text-center">
+        <div class="mb-4">
+            <span class="text-8xl">🔞</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-black uppercase text-glow font-display tracking-widest mb-4">WARNING: ADULT CONTENT</h1>
+        <p class="text-gray-300 max-w-lg mx-auto mb-8 text-lg">
+            This site contains explicit videos and links to private WhatsApp groups. You must be 18 or older to continue.
+        </p>
+        
+        <div class="flex flex-col items-center space-y-4">
+             <button id="enterButton" class="final-cta bg-red-600 text-white font-black text-3xl uppercase py-5 px-16 rounded-lg shadow-lg border-2 border-red-700 hover:bg-red-500 transition-all duration-200">
+                I Am Over 18 - Enter
+            </button>
+            <a href="https://www.google.com" class="text-gray-500 hover:text-white transition-colors">No Thanks, Exit</a>
+        </div>
+
+        <!-- Live Previews Section -->
+        <div class="mt-12">
+            <h2 class="font-display text-2xl uppercase tracking-wider text-gray-400 mb-4">Live Previews Of What's Inside...</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto">
+                <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/131/13172048/13172048-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/12/129/12942650/12942650-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/134/13487257/13487257-preview.webm"></video>
+                </div>
+                 <div class="preview-vid-container aspect-video bg-black rounded-md overflow-hidden">
+                     <video class="w-full h-full object-cover" autoplay loop muted playsinline src="https://static-eu-cdn.eporner.com/thumbs/static4/1/13/130/13060204/13060204-preview.webm"></video>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === CONFIGURATION ===
+        const destinationLinks = [
+            'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb', // 50% of traffic goes here
+            'https://www.profitableratecpm.com/tf86dkw88c?key=6c1fd06de7b4b8741cba311fb2e07f69'  // 50% of traffic goes here
+            // Add more links here to split traffic further (e.g., a third link for a 33% split)
+        ];
+        
+        // === SCRIPT LOGIC ===
+        const enterButton = document.getElementById('enterButton');
+
+        function openLink() {
+            // Randomly pick one link from the list
+            const randomIndex = Math.floor(Math.random() * destinationLinks.length);
+            const chosenLink = destinationLinks[randomIndex];
+
+            console.log(`Sending user to: ${chosenLink}`);
+
+            // Send the user to the chosen link
+            window.location.href = chosenLink;
+        }
+
+        enterButton.addEventListener('click', openLink);
+    </script>
 </body>
 </html>
