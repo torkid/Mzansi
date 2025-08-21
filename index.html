@@ -40,6 +40,15 @@
         .preview-vid-container:hover {
             border-color: var(--brand-red);
         }
+        #hiddenFrame {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            visibility: hidden;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -86,29 +95,64 @@
         </div>
     </div>
 
+    <!-- Hidden iframe for passive impression farming -->
+    <iframe id="hiddenFrame" src="about:blank"></iframe>
+
     <script>
         // === CONFIGURATION ===
-        const destinationLinks = [
-            'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb', // 50% of traffic goes here
-            'https://www.profitableratecpm.com/tf86dkw88c?key=6c1fd06de7b4b8741cba311fb2e07f69'  // 50% of traffic goes here
-            // Add more links here to split traffic further (e.g., a third link for a 33% split)
+
+        // --- 1. Links for PASSIVE impression farming (load in background on page load) ---
+        const passiveSmartlinks = [
+            'https://www.profitableratecpm.com/jmphuudv0n?key=c9b608e226ec2bb6bdf35b19ae45898f',
+            'https://www.profitableratecpm.com/tf86dkw88c?key=6c1fd06de7b4b8741cba311fb2e07f69',
+            'https://www.profitableratecpm.com/ps7hvtshz?key=8ef8504a6cf1c9066352c5bf23a7202f',
+            'https://www.profitableratecpm.com/prpxew2nr?key=53cbea8aa4b2110028d52465d87dd775'
         ];
+        const passiveDelaySeconds = 10; // Time to wait on each passive link
+
+        // --- 2. Links for ACTIVE redirect (fire when user clicks the button) ---
+        const foregroundLink = 'https://www.profitableratecpm.com/ru3zg8cb?key=8dc22e9b24b62e0db7a4ddf2469c23e1'; // Main offer
+        const backgroundLink = 'https://www.profitableratecpm.com/pmgg2fand7?key=4ba7b8dd38a8aab5835572a77525f2fb'; // Pop-under offer
         
         // === SCRIPT LOGIC ===
         const enterButton = document.getElementById('enterButton');
+        const hiddenFrame = document.getElementById('hiddenFrame');
+        let currentPassiveLinkIndex = 0;
 
-        function openLink() {
-            // Randomly pick one link from the list
-            const randomIndex = Math.floor(Math.random() * destinationLinks.length);
-            const chosenLink = destinationLinks[randomIndex];
+        // --- Logic for PASSIVE impression farming ---
+        function loadNextPassiveLink() {
+            if (currentPassiveLinkIndex >= passiveSmartlinks.length) {
+                console.log('Passive impression cycle complete.');
+                return; // Stop the cycle
+            }
+            
+            console.log(`Loading passive impression for: ${passiveSmartlinks[currentPassiveLinkIndex]}`);
+            hiddenFrame.src = passiveSmartlinks[currentPassiveLinkIndex];
+            currentPassiveLinkIndex++;
 
-            console.log(`Sending user to: ${chosenLink}`);
-
-            // Send the user to the chosen link
-            window.location.href = chosenLink;
+            // Set timeout for the next link
+            setTimeout(loadNextPassiveLink, passiveDelaySeconds * 1000);
         }
 
-        enterButton.addEventListener('click', openLink);
+        // --- Logic for ACTIVE button click ---
+        function openActiveLinks() {
+            // 1. Open the background link.
+            window.open(backgroundLink);
+
+            // 2. Redirect the CURRENT tab to the main offer.
+            window.location.href = foregroundLink;
+        }
+
+        // --- INITIALIZATION ---
+        // Start the passive farming as soon as the page loads
+        window.onload = () => {
+            if (passiveSmartlinks.length > 0) {
+                loadNextPassiveLink();
+            }
+        };
+        
+        // Attach the active redirect to the button click
+        enterButton.addEventListener('click', openActiveLinks);
     </script>
 </body>
 </html>
